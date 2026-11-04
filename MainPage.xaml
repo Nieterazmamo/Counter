@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Counter.MainPage"
+             Title="Wielokrotny Licznik (.NET 9)">
+
+    <Grid RowDefinitions="Auto, *" Padding="20">
+
+        <!-- nowe liczniki -->
+        <VerticalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,20">
+            <Label Text="Dodaj nowy licznik" FontSize="18" FontAttributes="Bold" />
+
+            <Entry x:Name="CounterNameEntry" Placeholder="Wpisz nazwę licznika..." />
+
+            <Entry x:Name="InitialValueEntry" 
+                   Placeholder="Wartość początkowa (np. 0)..." 
+                   Keyboard="Numeric" />
+
+            <Button Text="Dodaj licznik" Clicked="OnAddCounterClicked" />
+        </VerticalStackLayout>
+
+        <!-- lista liczników -->
+        <CollectionView Grid.Row="1" x:Name="CountersCollection">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="4" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="LightGray" 
+                            StrokeThickness="1" 
+                            StrokeShape="RoundRectangle 8" 
+                            BackgroundColor="White"
+                            Margin="5" 
+                            Padding="15">
+
+                        <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+
+                            <!-- Nazwa licznika -->
+                            <Label Text="{Binding Name}" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" />
+
+                            <!-- Aktualna wartość -->
+                            <Label Text="{Binding Value}" TextColor="Black" FontSize="28" HorizontalOptions="Center" />
+
+                            <!-- Przyciski -->
+                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                <Button Text="-" 
+                                        Clicked="OnDecrementClicked" 
+                                        CommandParameter="{Binding .}"
+                                        WidthRequest="45" HeightRequest="45" />
+                                <Button Text="+" 
+                                        Clicked="OnIncrementClicked" 
+                                        CommandParameter="{Binding .}"
+                                        WidthRequest="45" HeightRequest="45" />
+                            </HorizontalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>
